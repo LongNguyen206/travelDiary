@@ -1,0 +1,1 @@
+mongo ds143330.mlab.com:43330/travel-diary -u Long -p ABC123456

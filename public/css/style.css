@@ -1,0 +1,11 @@
+nav {
+    background-color: #659DBD;
+}
+
+nav .brand-logo {
+    left: 15px;
+}
+
+.dropdown-content {
+    top: -65px;
+}
