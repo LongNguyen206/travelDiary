@@ -57,18 +57,31 @@ router.get('/', (req, res) => {
     .catch(err => console.log(err));
 });
 
+//show a particular Trip
+router.get('/:id/show', (req, res) => {
+    Trip.findById({
+        _id: req.params.id
+    })
+    .then(trip => {
+        res.render('trips/show', {
+            trip: trip
+        });
+    })
+    .catch(err => console.log(err));
+});
+
 //edit a particular Trip
 router.get('/:id/edit', ensureAuthenticated, (req, res) => {
     Trip.findById({
         _id: req.params.id
     })
-    .then(Trip => {
-        if (Trip.user != req.user.id) {
+    .then(trip => {
+        if (trip.user._id != req.user.id) {
             req.flash('error_msg', 'Cannot edit this Trip');
             res.redirect('/trips');
         } else {
             res.render('trips/edit', {
-                Trip: Trip
+                trip: trip
             });
         };
     })
@@ -79,12 +92,12 @@ router.put('/:id', (req, res) => {
     Trip.findById({
         _id: req.params.id
     })
-    .then(Trip => {
-        //update the Trip with the values from the form
-        Trip.country = req.body.country,
-        Trip.description = req.body.description,
+    .then(trip => {
+        //update the trip with the values from the form
+        trip.country = req.body.country,
+        trip.description = req.body.description,
         //save it
-        Trip.save()
+        trip.save()
         .then(() => res.redirect('/trips'));
     })
     .catch(err => console.log(err));
@@ -95,12 +108,12 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
     Trip.findById({
         _id: req.params.id
     })
-    .then(Trip => {
-        if (Trip.user._id != req.user.id) {
-            req.flash('error_msg', 'Cannot delete this Trip');
+    .then(trip => {
+        if (trip.user._id != req.user.id) {
+            req.flash('error_msg', 'Cannot delete this trip');
             res.redirect('/trips');
         } else {
-            Trip.remove()
+            trip.remove()
             .then(() => {
                 req.flash('success_msg', 'Trip successfully deleted');
                 res.redirect('/trips');

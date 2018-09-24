@@ -6,11 +6,16 @@
                     <div class="card-content white-text">
                         <span class="card-title">{{country}}</span>
                         <p>by {{user.name}}</p>
+                        <br>
                         <p>{{description}}</p>
                     </div>
                     <div class="card-action">
-                        <a href="#">More details</a>
-                        <a href="#">User Profile</a>
+                        <form class="" action="/trips/{{id}}?_method=DELETE" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <a class="waves-effect waves-light btn-small" href="/trips/{{id}}/show">Show Details</a>
+                            <a class="waves-effect waves-light btn-small" href="/trips/{{id}}/edit">Edit</a>
+                            <button class="waves-effect waves-light btn-small" type="submit" name="button">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>

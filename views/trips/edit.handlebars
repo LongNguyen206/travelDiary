@@ -10,13 +10,13 @@
         <form class="col s12" method="post" action="/trips/{{trip.id}}?_method=PUT">
             <input type="hidden" name="_method" value="PUT">
           <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Title" id="title" type="text" class="validate" name="title" value="{{trip.country}}" required>
-              <label for="title">Title</label>
+            <div class="input-field col s6">
+              <input placeholder="Country" id="country" type="text" class="validate" name="country" value="{{trip.country}}" required>
+              <label for="country">Country</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12">
               <input placeholder="Description" id="description" type="text" class="validate" name="description" value="{{trip.description}}" required>
               <label for="description">Description</label>
             </div>

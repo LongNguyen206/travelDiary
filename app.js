@@ -1,3 +1,6 @@
+//require and load dotenv
+require('dotenv').config();
+
 //require express package
 const express = require("express");
 const app = express();
@@ -14,17 +17,16 @@ const passport = require('passport');
 const session = require('express-session');
 //use this for Flash messages:
 const flash = require('connect-flash');
-
 //include the database:
 const db = require('./config/database');
+//setting the port:
 const port = process.env.PORT || 3000;
 
-//connecting other js files:
+//connecting other route files:
 const users = require('./routes/users');
 //load passport config:
 require('./config/passport')(passport);
 const trips = require('./routes/trips');
-
 
 //any app method has 2 arguments: port/path and callback function (what you expect from the app)
 
@@ -33,7 +35,12 @@ mongoose.connect(db.mongoURI, { useNewUrlParser: true })
 .then(() => console.log("connected to db"))
 .catch((err) => console.log(err));
 
-//middlewares are needed when you install packages (and location where you put them in code MATTERS!) >>>>
+//require the trip model (no need for extention)
+require('./models/Trip');
+//create a Trip model
+const Trip = mongoose.model('trips');
+
+//middleware are needed when you install packages (and location where you put them in code MATTERS!) >>>>
 
 // app.use((req, res, next) => {
 //     console.log('middleware running');
@@ -89,12 +96,15 @@ app.use((req, res, next) => {
 //set home page:
 //if using exphbs, create a 'views' folder
 app.get('/', (req, res) => {
-    let title = "TITLELOO";
     // res.send('HOME');
-    res.render('home', {
-        elephant: title
-    }); //using exphbs
-});
+    Trip.find()
+    .then(trips => {
+        res.render('trips/index', {
+            trips: trips
+        });
+    })
+    .catch(err => console.log(err));
+}); //using exphbs
 
 //you have to restart the server whenever you make a change to js file
 //install Nodemon to have live updates (run nodemon command instead of node app.js)
