@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 //bring in the ensureAuthenticated helper:
 const {ensureAuthenticated} = require('../helper/auth');
-
 //require the trip model (no need for extention)
 require('../models/Trip');
 //create a Trip model
