@@ -1,8 +1,15 @@
+//require and load dotenv
+require('dotenv').config();
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 //use this for Flash messages:
 const flash = require('connect-flash');
+const googleMapsClient = require('@google/maps').createClient({
+    key: process.env.GEOCODER_API_KEY,
+    Promise: Promise
+  });
 //bring in the ensureAuthenticated helper:
 const {ensureAuthenticated} = require('../helper/auth');
 //require the trip model (no need for extention)
@@ -17,32 +24,55 @@ router.get('/new', ensureAuthenticated, (req, res) => {
 
 router.post('/', (req, res) => {
     //server-side validations:
-    let errors = [];
-    if (!req.body.country) {
-        errors.push({text: "Add a Country!"});
-    }
-    if (!req.body.description) {
-        errors.push({text: "Add a Description!"});
-    }
-    if (errors.length > 0) {
-        //if there are any errors, re-render the form instead of submitting it
-        res.render('trips/new', {
-            errors: errors,
-            country: req.body.country,
-            description: req.body.description
-        });
-    } else {
+    // let errors = [];
+    // if (!req.body.country) {
+    //     errors.push({text: "Add a Country!"});
+    // }
+    // if (!req.body.description) {
+    //     errors.push({text: "Add a Description!"});
+    // }
+    // if (errors.length > 0) {
+    //     //if there are any errors, re-render the form instead of submitting it
+    //     res.render('trips/new', {
+    //         errors: errors,
+    //         country: req.body.country,
+    //         description: req.body.description
+    //     });
+    // } else {
+    //     let newTrip = {
+    //         country: req.body.country,
+    //         description: req.body.description,
+    //         user: req.user
+    //     }
+    //     new Trip(newTrip).save() //returns a promise:
+    //     .then(trips => {
+    //         res.redirect('/trips');
+    //     })
+    //     .catch(err => console.log(err));
+    // }
+
+    googleMapsClient.geocode({address: `${req.body.destination}`})
+    .asPromise()
+    .then((response) => {
+        var place = response.json.results[0];
+        console.log(response.json.results[0]);
         let newTrip = {
-            country: req.body.country,
+            destination: place,
             description: req.body.description,
             user: req.user
         }
+    
         new Trip(newTrip).save() //returns a promise:
         .then(trips => {
             res.redirect('/trips');
         })
         .catch(err => console.log(err));
-    }
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
+    
 });
 
 //show all trips from db:
@@ -93,7 +123,7 @@ router.put('/:id', (req, res) => {
     })
     .then(trip => {
         //update the trip with the values from the form
-        trip.country = req.body.country,
+        trip.destination = req.body.destination,
         trip.description = req.body.description,
         //save it
         trip.save()

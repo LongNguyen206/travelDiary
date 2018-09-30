@@ -8,12 +8,22 @@
   <div class="card-content">
     <div class="row">
         <form class="col s12" method="post" action="/trips">
-            <div class="row">
+
+          <div class="row">
             <div class="input-field col s6">
-              <input placeholder="Country" id="country" type="text" class="validate" name="country" value="{{country}}" required>
-              <label for="country">Country</label>
+              <div id="locationField">
+                <label for="autocomplete">Destination</label>
+                <input id="autocomplete" placeholder="Where did you travel?" type="text" name="destination" value="{{destination}}" required></input>
+              </div>
             </div>
           </div>
+
+          {{!-- <div class="row">
+            <div class="input-field col s6">
+              <input placeholder="Country" id="country" type="text" class="validate" name="country"  required>
+              <label for="country">Country</label>
+            </div>
+          </div> --}}
           <div class="row">
             <div class="input-field col s12">
               <input placeholder="Description" id="description" type="text" class="validate" name="description" value="{{description}}" required>
@@ -30,3 +40,7 @@
       </div>
   </div>
 </div>
+<script src="/js/placesApi.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjBY-p5QlHSOy1X018DMzKFqRrJ-eYcsI&libraries=places&callback=initAutocomplete" async defer>
+
+</script>

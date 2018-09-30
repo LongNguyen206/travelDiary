@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TripSchema = new Schema({
-    country: {
-        type: String,
+    destination: {
+        type: Object,
         required: true
     },
     description: {

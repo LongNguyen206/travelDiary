@@ -104,7 +104,7 @@ app.get('/', (req, res) => {
         });
     })
     .catch(err => console.log(err));
-}); //using exphbs
+}); //using exphbs 
 
 //you have to restart the server whenever you make a change to js file
 //install Nodemon to have live updates (run nodemon command instead of node app.js)
