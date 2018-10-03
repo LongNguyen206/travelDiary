@@ -1,0 +1,38 @@
+<script src="https://www.amcharts.com/lib/3/ammap.js" type="text/javascript"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldHigh.js" type="text/javascript"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js" type="text/javascript"></script>
+<div id="mapdiv" style="width: 100vw; height: 100vh;"></div>
+
+<script type="text/javascript">
+    console.log(`{{user.countriesShort}}`);
+    let arr = `{{user.countriesShort}}`.split(",");
+    console.log(arr);
+    var countryList = [];
+    for (let i=0; i<arr.length; i++) {
+        countryList.push({ "id": arr[i], "showAsSelected": true })
+    }
+    console.log(countryList);
+    var map = AmCharts.makeChart("mapdiv",{
+        type: "map",
+        theme: "light",
+        projection: "mercator",
+        panEventsEnabled : true,
+        zoomControl: {
+            zoomControlEnabled : true
+        },
+        dataProvider : {
+            map : "worldHigh",
+            getAreasFromMap : true,
+            areas : countryList
+        },
+        areasSettings : {
+            autoZoom : true,
+            color : "#DDDDDD",
+            colorSolid : "#ebdb8b",
+            selectedColor : "#67b7dc",
+            outlineColor : "#FFFFFF",
+            rollOverColor : "#ebdb8b",
+            rollOverOutlineColor : "#FFFFFF"
+        }
+    });
+</script>

@@ -25,8 +25,11 @@ router.post('/register', (req, res) => {
         if (user.length != 0) {
             errors.push({text: "Email taken"});
         }
-        if (/^(\w+)(\s?)(\w*)$/.test(req.body.name) == false) {
+        if (/^(\w+)(\s?)(\w*)$/.test(req.body.firstName) == false) {
             errors.push({text: "Invalid name"});
+        }
+        if (/^(\w+)(\s?)(\w*)$/.test(req.body.lastName) == false) {
+            errors.push({text: "Invalid surname"});
         }
         if (req.body.password2 !== req.body.password)  {
             errors.push({text: "Password confirmation does not match!"});
@@ -42,12 +45,14 @@ router.post('/register', (req, res) => {
             //if there are any errors, re-render the form instead of submitting it
             res.render('users/register', {
                 errors: errors,
-                name: req.body.name,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 email: req.body.email
             })
         } else {
             let newUser = {
-                name: req.body.name,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 email: req.body.email,
                 password: req.body.password
             }
@@ -82,6 +87,14 @@ router.post('/login', (req, res, next) => {
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next); //self invoked function
+});
+
+// This will redirect to Google Login Page, after which it will redirect to callbackURL (if successful)
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+        // Successful authentication, redirect dashboard
+        res.redirect('/');
 });
 
 router.get('/logout', (req, res) => {

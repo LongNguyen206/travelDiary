@@ -1,45 +1,54 @@
-<h1>Sign Up</h1>
-<!-- loop through the errors and display the validation message -->
-{{#each errors}}
-  <h4>{{text}}</h4>
-{{else}}
+<div class="container" style="text-align: center;">
+  <div class="card" id="auth-card">
+    <div class="card-content">
+      <h2>Sign Up</h2>
+      <!-- loop through the errors and display the validation message -->
+      {{#each errors}}
+        <p>{{text}}</p>
+      {{else}}
+      {{/each}}
+        <form class="col s12" action="/users/register" method="post">
 
-{{/each}}
-<div class="row">
-  <form class="col s12" action="/users/register" method="post">
-    <div class="row">
-      <div class="input-field col s6">
-        <input id="name" type="text" class="validate" name="name" value="{{name}}" required>
-        <label for="first_name">Name</label>
-      </div>
-      {{!-- <div class="input-field col s6">
-        <input id="last_name" type="text" class="validate">
-        <label for="last_name">Last Name</label>
-      </div> --}}
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="firstName" type="text" class="validate" name="firstName" value="{{firstName}}" required>
+              <label for="firstName">Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="lastName" type="text" class="validate" name="lastName" value="{{lastName}}" required>
+              <label for="lastName">Surname</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" name="email" value="{{email}}" required>
+              <label for="email">Email</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Minimum 6 characters" id="Password" type="password" class="validate" name="password" minlength="5" value="{{password}}" required>
+              <label for="password">Password</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="Password2" type="password" class="validate" name="password2" minlength="5" value="{{password2}}" required>
+              <label for="password2">Confirm Password</label> 
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Sign Up</button>
+          </div>
+
+          <div class="row">
+            <p>Or sign up with <a href="/users/google">Google</a></p>
+          </div>
+        </form>
     </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate" name="email" value="{{email}}" required>
-        <label for="email">Email</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <input placeholder="Minimum 6 characters" id="Password" type="password" class="validate" name="password" minlength="5" value="{{password}}" required>
-        <label for="password">Password</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="Password2" type="password" class="validate" name="password2" minlength="5" value="{{password2}}" required>
-        <label for="password2">Confirm Password</label> 
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s6">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        </button>
-      </div>
-    </div>
-  </form>
+  </div>
 </div>

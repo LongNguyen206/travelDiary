@@ -1,21 +1,25 @@
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-    {{#if user}}
-        <li><a href="/trips/new">Add Trip</a></li>
-        <li class="divider"></li>
-        <li><a href="/users/logout">Log out</a></li>
-    {{else}}
-        <li><a href="/users/register">Sign up</a></li>
-        <li><a href="/users/login">Log in</a></li>
-    {{/if}}
+    <li><a href="/trips/new"><i class="fas fa-map-marker-alt"></i>Add a Trip</a></li>
+    <li><a href="/trips/mine"><i class="fas fa-list-ul"></i>My Trips</a></li>
+    <li><a href="/mymap"><i class="fas fa-map"></i>Show my Map!</a></li>
+    <li><a href="/dashboard"><i class="fas fa-user-cog"></i>Dashboard</a></li>
+    <li class="divider"></li>
+    <li><a href="/users/logout"><i class="fas fa-sign-out-alt"></i>Log out</a></li>
 </ul>
 <nav>
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">Travel Diary</a>
-    <ul class="right hide-on-med-and-down">
-        <li><a href="/trips">All Trips</a></li>
-      <!-- Dropdown Trigger -->
-      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{user.email}}<i class="material-icons right">arrow_drop_down</i></a></li>
+    <ul class="right hide-on-small-only">
+        <li><a href="/trips">Explore trips</a></li>
+        {{#if user}}
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{user.email}}<i class="material-icons right">arrow_drop_down</i></a></li>
+        {{else}}
+            <li><a href="/users/register">Sign up</a></li>
+            <li><a href="/users/login">Log in</a></li>
+        {{/if}}
+        <!-- Dropdown Trigger -->
+        
     </ul>
   </div>
 </nav>

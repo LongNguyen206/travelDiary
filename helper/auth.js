@@ -7,5 +7,12 @@ module.exports = {
             //else redirect to login page
             res.redirect('/users/login');
         }
+    },
+    ensureGuest: (req, res, next) => {
+        if (req.isAuthenticated()) {
+            res.redirect('/dashboard');
+        } else {
+            return next();
+        }
     }
 }

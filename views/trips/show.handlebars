@@ -1,17 +1,47 @@
-<div class="container">
-    <div class="row">
-        <div class="col s12">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title">{{trip.destination}}</span>
-                    <p>by {{trip.user.name}}</p>
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">{{trip.title}}</span>
+                <p>Destination: {{trip.destination.fullDestination}}</p>
+                    <div style="text-align: right;">
+                        <p><a href="#user"><img class="circle" src="{{trip.user.image}}" width="50px" height="50px"></a></p>
+                        <p>by <a href="#name"><span>{{trip.user.firstName}} {{trip.user.lastName}}</span></a></p>
+                        <p><time class="timestamp meta">{{formatDate trip.date}}</time></p>
+                    </div>
                     <br>
-                    <p>{{trip.description}}</p>
-                </div>
-                <div class="card-action">
-                    <a href="#">User Profile</a>
-                </div>
+                    <br>
+                <div class="divider"></div>
+                <p>{{{trip.description}}}</p>
+                <div id="map"></div>
             </div>
+            {{#if user}}
+            <div class="card-action">
+                <form class="" action="/trips/{{id}}?_method=DELETE" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a class="waves-effect waves-light btn-small" href="/trips/{{id}}/edit">Edit</a>
+                    <button class="waves-effect waves-light btn-small" type="submit" name="button">Delete</button>
+                </form>
+            </div>
+            {{/if}}
         </div>
     </div>
 </div>
+
+<script>
+    function initMap() {
+    var myLatLng = {lat: Number(`{{trip.destination.lat}}`), lng: Number(`{{trip.destination.lng}}`)};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4.5,
+        center: myLatLng
+    });
+
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: `{{trip.title}}`
+    });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjBY-p5QlHSOy1X018DMzKFqRrJ-eYcsI&callback=initMap"></script>

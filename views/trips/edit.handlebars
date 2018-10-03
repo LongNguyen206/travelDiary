@@ -1,33 +1,65 @@
-<h1>Edit Trip</h1>
-{{!-- looping through the errors and displaying validation messages: --}}
-{{#each errors}}
-    <h4>{{text}}</h4>
-{{else}}
-{{/each}}
 <div class="card">
   <div class="card-content">
+    <h1>Edit your Trip</h1>
     <div class="row">
-        <form class="col s12" method="post" action="/trips/{{trip.id}}?_method=PUT">
-            <input type="hidden" name="_method" value="PUT">
-          <div class="row">
-            <div class="input-field col s6">
-              <input placeholder="Country" id="country" type="text" class="validate" name="country" value="{{trip.country}}" required>
-              <label for="country">Country</label>
+      <form class="col s12" method="post" action="/trips">
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="title" type="text" name="title" required></input>
+            <label for="title">Title</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <div id="locationField">
+              <input id="autocomplete" placeholder="Where did you travel?" type="text" name="destination" required></input>
             </div>
           </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Description" id="description" type="text" class="validate" name="description" value="{{trip.description}}" required>
-              <label for="description">Description</label>
-            </div>
+            <div class="input-field col s3">
+            <label for="dateFrom">From</label>
+            <input type="text" class="datepicker" id="dateFrom" name="dateFrom">
           </div>
-          <div class="row">
-            <div class="input-field col s6">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-              </button>
-            </div>
+          <div class="input-field col s3">
+            <label for="dateTo">To</label>
+            <input type="text" class="datepicker" id="dateTo" name="dateTo">
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <h5>About your trip:</h5>
+            <textarea name="description"></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s3">
+            <select name="status">
+              <option value="public" selected>Public</option>
+              <option value="private">Private</option>
+              <option value="unpublished">Unpublished</option>
+            </select>
+            <label for="status">Status</label>
+          </div>
+          <div class="input-field col s3 offset-s6 submit-btn">
+            <button class="btn waves-effect waves-light" type="submit">Submit
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <p class="col s3">
+            <label for="allowComments">
+              <input type="checkbox" id="allowComments" name="allowComments" class="filled-in" id="filled-in-box" checked="checked" />
+              <span>Allow Comments</span>
+            </label>
+          </p>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+<script src="/js/placesApi.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjBY-p5QlHSOy1X018DMzKFqRrJ-eYcsI&libraries=places&callback=initAutocomplete" async defer></script>
